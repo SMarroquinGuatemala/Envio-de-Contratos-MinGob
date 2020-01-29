@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,49 +23,51 @@ namespace Envio_de_Contratos
       public  DateTime? FechaFinal { get; set; } = null;
       public  string NombreEmpleado { get; set; } = null;
 
-
       public Form1()
       {
          InitializeComponent();
       }
 
       private void Form1_Load(object sender, EventArgs e)
-      {
-      
-
+      {      
          try
-         {
+         {            
             CboEmpresas.Fill();
             cboPlanillas.Fill();
             cboPuesto.Fill();
-            txtNumeroDeEmpleado.Text = "04895";
+            //txtNumeroDeEmpleado.Text = "04895";
          }
          catch (Exception ex)
          {
             throw ex;
-         }
-         //var token = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseJson)["access_token"].ToString();
-
-         //return token.Length > 0 ? token : null;
+         }      
       }
 
       private  static async Task Main( string dpiFirmantePatrono, string razonSocialPatrono, string nombreFirmantePatrono, string calidadFirmanteLegalPatrono, string salario,
                                        string jornada, string actividadEconomica, string formaPago, string plazo, string FechaInicioRelacion,  string fechafin, string horasTiempoParcial, string tarifaTiempoParcial,
                                        string jornadaTiempoParcial, string nombreEmpleado,string dpiEmpleado, string edadEmpleado, string sexoEmpleado, string NumeroDeEmpleado )
-      {
-         try
          {
+            try
+            {
+          
             /*Esta Ruta será la que devuelve el token de autenticación del usuario.*/
-            string vRutaToken = "https://servicios.mintrabajo.gob.gt:5001";
+            //string vRutaToken = "https://servicios.mintrabajo.gob.gt:5001";  Desarrollo
+            string vRutaToken = "https://sso.mintrabajo.gob.gt"; 
+              
             var client = new HttpClient();
+               
             var disco = await client.GetDiscoveryDocumentAsync(vRutaToken);
 
+  
             if (disco.IsError)
+             
             {
+            
                MessageBox.Show("Error al leer url " + disco.Error);
+               
                return;
+               
             }
-
             // request token
             var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
             {
@@ -79,23 +83,17 @@ namespace Envio_de_Contratos
                MessageBox.Show("Error al ingresar credenciales" + tokenResponse.Error);
                return;
             }
-
             //Muestro en consola el token generado para el usuario.
-            Console.WriteLine(tokenResponse.Json.GetValue("access_token"));
-            Console.WriteLine("\n\n");
-
+            //Console.WriteLine(tokenResponse.Json.GetValue("access_token"));
+            //Console.WriteLine("\n\n");
             /*vRutaPost será la ruta que se asigna para realizar el post con los datos del contrato y empleado para la grabación y revuelve jSon con el ticket.*/
-
-            string vRutaPost = "https://servicios.mintrabajo.gob.gt/api/contratos/1.0/contratos";
+            string vRutaPost = "https://recit.mintrabajo.gob.gt/api/contratos/1.0/contratos";
             var cliente = new RestClient(vRutaPost);
             cliente.Timeout = -1;
             var request = new RestRequest(Method.POST);
             request.AddHeader("Authorization", "Bearer " + tokenResponse.Json.GetValue("access_token"));
             request.AddHeader("header", "application/json");
-
-            /*
-             Todos los datos agregados como parametos son puramente de ejemplo, deben de colocarse los reales
-             */
+            /*Todos los datos agregados como parametos son puramente de ejemplo, deben de colocarse los reales*/
             // request.AddParameter("dpiFirmantePatrono", "1234567893214");
             request.AddParameter("dpiFirmantePatrono", dpiFirmantePatrono);
             // request.AddParameter("razonSocialPatrono", "Sucursal Perez");
@@ -108,6 +106,7 @@ namespace Envio_de_Contratos
             request.AddParameter("salario", salario);
             //request.AddParameter("jornada", "[1]");
             request.AddParameter("jornada", "[" + jornada + "]");
+            
             //request.AddParameter("actividadEconomica", "3");
             request.AddParameter("actividadEconomica", actividadEconomica);
             //request.AddParameter("formaPago", "2");
@@ -115,9 +114,18 @@ namespace Envio_de_Contratos
             //request.AddParameter("plazo", "1");
             request.AddParameter("plazo", plazo);
             //request.AddParameter("FechaInicioRelacion", "12/10/2025");
-            request.AddParameter("FechaInicioRelacion", Convert.ToDateTime(FechaInicioRelacion).Date.ToShortDateString());
+            request.AddParameter("FechaInicioRelacion",   Convert.ToDateTime(FechaInicioRelacion).Date.ToShortDateString());
             //request.AddParameter("fechafin", "12/10/2025");
-            request.AddParameter("fechafin", fechafin);
+          
+            if (string.IsNullOrEmpty(fechafin))
+            {
+                request.AddParameter("fechaFin", "");
+            }
+            else
+            {
+                request.AddParameter("fechaFin",Convert.ToDateTime(fechafin).Date.ToString("yyyy/MM/dd"));
+            }
+          
             //request.AddParameter("horasTiempoParcial", "150");
             request.AddParameter("horasTiempoParcial", horasTiempoParcial);
             request.AddParameter("tarifaTiempoParcial", "0.00");
@@ -132,7 +140,6 @@ namespace Envio_de_Contratos
             request.AddParameter("edadEmpleado", edadEmpleado);
             //request.AddParameter("sexoEmpleado", "H");
             request.AddParameter("sexoEmpleado", sexoEmpleado);
-
             /**
              * Para el Archivo se debe de colocar la ruta del archivo pdf
              * y en el AddFile en lugar de "archivo.pdf" colocar el nombre del archivo a cargar.
@@ -155,7 +162,6 @@ namespace Envio_de_Contratos
                //List<ResultMinGob> list = new List<ResultMinGob>();
                //list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ResultMinGob>>(response.Content);
                ResultMinGob resultMinGob = JsonConvert.DeserializeObject<ResultMinGob>(response.Content);
-
                /*Para obtener el PDF de la constancia transitoria se utiliza la ruta */
                DatabaseProviderFactory factory = new DatabaseProviderFactory();
                // Create a Database object from the factory using the connection string name.
@@ -165,20 +171,55 @@ namespace Envio_de_Contratos
                System.Data.Common.DbCommand dbCommand = namedDB.GetSqlStringCommand(sql);
                namedDB.AddInParameter(dbCommand, "PNumeroDeEmpleado", System.Data.DbType.String, NumeroDeEmpleado);
                namedDB.AddInParameter(dbCommand, "PFechaDeIngreso", System.Data.DbType.Date, Convert.ToDateTime(FechaInicioRelacion).Date.ToShortDateString());
-               namedDB.AddInParameter(dbCommand, "PTicket", System.Data.DbType.Int16, resultMinGob.ticket);
+               namedDB.AddInParameter(dbCommand, "PTicket", System.Data.DbType.Int64, resultMinGob.ticket);
                namedDB.ExecuteNonQuery(dbCommand);
-               string vRutaConstancia = "https://servicios.mintrabajo.gob.gt/api/constancia/" + resultMinGob.ticket.ToString() + "/adjuntos/constanciatransitoria.pdf";
-             
+               string vRutaConstancia =string.Concat("https://recit.mintrabajo.gob.gt/api/contratos/", resultMinGob.ticket.ToString() , "/adjuntos/ConstanciaTransitoria.pdf");
+               WebClient webClient = new WebClient();             
+               webClient.DownloadFileAsync(new Uri(vRutaConstancia), string.Concat( @"\\NASTRFCA1\ArchivosAdjuntosSistemas\ContratosConstanciaTransitoria\", NumeroDeEmpleado ,"_", resultMinGob.ticket.ToString() , " .pdf"));
+               //Inserto Constancias Transitorias
+               sql = null;
+               sql = "insert DbArchivosAdjuntos.dbo.TblArchivosAdjuntos(Correlativo,Clase,Referencia,TipoDeArchivo,Nombre,Descripcion,Extension,Ruta) values (@PCorrelativo,@PClase,@PReferencia,@PTipoDeArchivo,@PNombre,@PDescripcion,@PExtension,@PRuta)";
+               dbCommand = null;
+               dbCommand = namedDB.GetSqlStringCommand(sql);
+               namedDB.AddInParameter(dbCommand, "PCorrelativo", System.Data.DbType.Int64, resultMinGob.ticket.ToString());
+               namedDB.AddInParameter(dbCommand, "PClase", System.Data.DbType.String, "48");
+               namedDB.AddInParameter(dbCommand, "PReferencia", System.Data.DbType.String, NumeroDeEmpleado);
+               namedDB.AddInParameter(dbCommand, "PTipoDeArchivo", System.Data.DbType.String, "0");   
+               namedDB.AddInParameter(dbCommand, "PNombre", System.Data.DbType.String, NumeroDeEmpleado + "_" + resultMinGob.ticket.ToString());
+               namedDB.AddInParameter(dbCommand, "PDescripcion", System.Data.DbType.String, vRutaConstancia);
+               namedDB.AddInParameter(dbCommand, "PExtension", System.Data.DbType.String, "pdf");
+               namedDB.AddInParameter(dbCommand, "PRuta", System.Data.DbType.String, string.Concat( @"\ContratosConstanciaTransitoria\" , NumeroDeEmpleado , "_" + resultMinGob.ticket.ToString()));
+               namedDB.ExecuteNonQuery(dbCommand);
+               
+               vRutaConstancia = string.Empty;
+               vRutaConstancia = string.Concat("https://recit.mintrabajo.gob.gt/api/contratos/", resultMinGob.ticket.ToString(), "/adjuntos/ConstanciaDefinitiva.pdf");
+               webClient = new WebClient();
+               webClient.DownloadFileAsync(new Uri(vRutaConstancia), string.Concat(@"\\NASTRFCA1\ArchivosAdjuntosSistemas\ContratosConstanciaDefinitiva\", NumeroDeEmpleado, "_", resultMinGob.ticket.ToString(), " .pdf"));
+               //Inserto Constancias Definitivas
+               sql = null;
+               sql = "insert DbArchivosAdjuntos.dbo.TblArchivosAdjuntos(Correlativo,Clase,Referencia,TipoDeArchivo,Nombre,Descripcion,Extension,Ruta) values (@PCorrelativo,@PClase,@PReferencia,@PTipoDeArchivo,@PNombre,@PDescripcion,@PExtension,@PRuta)";
+               dbCommand = null;
+               dbCommand = namedDB.GetSqlStringCommand(sql);
+               namedDB.AddInParameter(dbCommand, "PCorrelativo", System.Data.DbType.Int64, resultMinGob.ticket.ToString());
+               namedDB.AddInParameter(dbCommand, "PClase", System.Data.DbType.String, "50");
+               namedDB.AddInParameter(dbCommand, "PReferencia", System.Data.DbType.String, NumeroDeEmpleado);
+               namedDB.AddInParameter(dbCommand, "PTipoDeArchivo", System.Data.DbType.String, "0");
+               namedDB.AddInParameter(dbCommand, "PNombre", System.Data.DbType.String, NumeroDeEmpleado + "_" + resultMinGob.ticket.ToString());
+               namedDB.AddInParameter(dbCommand, "PDescripcion", System.Data.DbType.String, vRutaConstancia);
+               namedDB.AddInParameter(dbCommand, "PExtension", System.Data.DbType.String, "pdf");
+               namedDB.AddInParameter(dbCommand, "PRuta", System.Data.DbType.String, string.Concat(@"\ContratosConstanciaDefinitiva\", NumeroDeEmpleado, "_" + resultMinGob.ticket.ToString()));
+               namedDB.ExecuteNonQuery(dbCommand);
+
+               MessageBox.Show("Contratos enviados correctamente");
             }
             else
             {
-               MessageBox.Show("Error en el envio de contratos ");
-
+               MessageBox.Show("Error en el envio de contratos " + response.Content.ToString());
             }
          }
          catch (Exception ex)
          {
-            MessageBox.Show("Error WS" + ex.Message);
+            MessageBox.Show("Error WS " + ex.Message);
          }
         
 
@@ -254,38 +295,47 @@ namespace Envio_de_Contratos
       {
          try
          {
+            this.Cursor = Cursors.WaitCursor;
             foreach (DataGridViewRow item in grdDatos.SelectedRows)
             {
-             
-                Main(   item.Cells["DPIFirmantePatronoColumn"].Value.ToString(),
-                        item.Cells["razonSocialPatronoColumn"].Value.ToString(),
-                        item.Cells["nombreFirmantePatronoColumn"].Value.ToString(),
-                        item.Cells["calidadFirmanteLegalPatronoColumn"].Value.ToString(),
-                        item.Cells["SalarioColumn"].Value.ToString(),
-                        item.Cells["jornadaColumn"].Value.ToString(),
-                        item.Cells["actividadEconomicaColumn"].Value.ToString(),
-                        item.Cells["formaPagoColumn"].Value.ToString(),
-                        item.Cells["plazoColumn"].Value.ToString(),
-                        item.Cells["fechaInicioRelacionColumn"].Value.ToString(),
-                        item.Cells["fechaFinColumn"].Value.ToString(),
-                        item.Cells["horasTiempoParcialColumn"].Value.ToString(),
-                        item.Cells["tarifaTiempoParcialColumn1"].Value.ToString(),
-                        item.Cells["jornadaTiempoParcialColumn"].Value.ToString(),
-                        item.Cells["nombreEmpleadoColumn"].Value.ToString(),
-                        item.Cells["dpiEmpleadoColumn"].Value.ToString(),
-                        item.Cells["edadEmpleadoColumn"].Value.ToString(),
-                        item.Cells["sexoEmpleadoColumn"].Value.ToString(),
-                        item.Cells["NumeroDeEmpleadoColumn"].Value.ToString());
+               if (item.Cells["jornadaColumn"].Value.ToString() == "")
+               {
+                  MessageBox.Show("No existe jornada para el contrato." + Environment.NewLine + "Numero de Empleado: " + item.Cells["NumeroDeEmpleadoColumn"].Value.ToString());
+               }
+               else
+               {
+                  Main(item.Cells["DPIFirmantePatronoColumn"].Value.ToString(),
+                          item.Cells["razonSocialPatronoColumn"].Value.ToString(),
+                          item.Cells["nombreFirmantePatronoColumn"].Value.ToString(),
+                          item.Cells["calidadFirmanteLegalPatronoColumn"].Value.ToString(),
+                          item.Cells["SalarioColumn"].Value.ToString(),
+                          item.Cells["jornadaColumn"].Value.ToString(),
+                          item.Cells["actividadEconomicaColumn"].Value.ToString(),
+                          item.Cells["formaPagoColumn"].Value.ToString(),
+                          item.Cells["plazoColumn"].Value.ToString(),
+                          item.Cells["fechaInicioRelacionColumn"].Value.ToString(),
+                          item.Cells["fechaFinColumn"].Value.ToString(),
+                          item.Cells["horasTiempoParcialColumn"].Value.ToString(),
+                          item.Cells["tarifaTiempoParcialColumn1"].Value.ToString(),
+                          item.Cells["jornadaTiempoParcialColumn"].Value.ToString(),
+                          item.Cells["nombreEmpleadoColumn"].Value.ToString(),
+                          item.Cells["dpiEmpleadoColumn"].Value.ToString(),
+                          item.Cells["edadEmpleadoColumn"].Value.ToString(),
+                          item.Cells["sexoEmpleadoColumn"].Value.ToString(),
+                          item.Cells["NumeroDeEmpleadoColumn"].Value.ToString());
+               }
 
             }
-
-
 
             Busqueda();
          }
          catch (Exception ex)
          {
             MessageBox.Show("Error: " + ex.Message);
+         }
+         finally
+         {
+            this.Cursor = Cursors.Default;
          }
 
       }

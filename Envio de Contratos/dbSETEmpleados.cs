@@ -2,9 +2,9 @@
 {
 
 
-   partial class dbSETEmpleados
-   {
-   }
+    partial class dbSETEmpleados
+    {
+    }
 }
 
 namespace Envio_de_Contratos.dbSETEmpleadosTableAdapters {

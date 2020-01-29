@@ -36,6 +36,7 @@
          System.Windows.Forms.Label planillaLabel;
          System.Windows.Forms.Label puestoLabel;
          System.Windows.Forms.Label empresaLabel;
+         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
          this.panel1 = new System.Windows.Forms.Panel();
          this.txtNombreEmpleado = new UserWindowsControlLibrary.TextBoxSD();
          this.cboPuesto = new UserWindowsControlLibrary.ComboBoxSD();
@@ -70,9 +71,12 @@
          this.EmpresaColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
          this.mnuOpciones = new System.Windows.Forms.ContextMenuStrip(this.components);
          this.MnuEnviarContrato = new System.Windows.Forms.ToolStripMenuItem();
-         this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-         this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-         this.lblRegistros = new System.Windows.Forms.ToolStripStatusLabel();
+         this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+         this.lblRegistros = new System.Windows.Forms.ToolStripLabel();
+         this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+         this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+         this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+         this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
          fechaInicioRelacionLabel = new System.Windows.Forms.Label();
          fechaFinLabel = new System.Windows.Forms.Label();
          nombreEmpleadoLabel = new System.Windows.Forms.Label();
@@ -83,7 +87,7 @@
          this.panel1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.grdDatos)).BeginInit();
          this.mnuOpciones.SuspendLayout();
-         this.statusStrip1.SuspendLayout();
+         this.toolStrip1.SuspendLayout();
          this.SuspendLayout();
          // 
          // fechaInicioRelacionLabel
@@ -100,14 +104,14 @@
          fechaFinLabel.AutoSize = true;
          fechaFinLabel.Location = new System.Drawing.Point(943, 5);
          fechaFinLabel.Name = "fechaFinLabel";
-         fechaFinLabel.Size = new System.Drawing.Size(153, 18);
+         fechaFinLabel.Size = new System.Drawing.Size(150, 18);
          fechaFinLabel.TabIndex = 10;
-         fechaFinLabel.Text = "Fecha Inicio Relacion:";
+         fechaFinLabel.Text = "Fecha Final Relacion:";
          // 
          // nombreEmpleadoLabel
          // 
          nombreEmpleadoLabel.AutoSize = true;
-         nombreEmpleadoLabel.Location = new System.Drawing.Point(3, 55);
+         nombreEmpleadoLabel.Location = new System.Drawing.Point(7, 55);
          nombreEmpleadoLabel.Name = "nombreEmpleadoLabel";
          nombreEmpleadoLabel.Size = new System.Drawing.Size(137, 18);
          nombreEmpleadoLabel.TabIndex = 12;
@@ -151,6 +155,8 @@
          // 
          // panel1
          // 
+         this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.panel1.Controls.Add(this.txtNombreEmpleado);
          this.panel1.Controls.Add(this.cboPuesto);
@@ -175,22 +181,22 @@
          // 
          // txtNombreEmpleado
          // 
-         this.txtNombreEmpleado.BackColor = System.Drawing.Color.White;
+         this.txtNombreEmpleado.BackColor = System.Drawing.Color.LightGray;
          this.txtNombreEmpleado.FormatInput = UserWindowsControlLibrary.TextBoxSD.InputFormat.InputString;
-         this.txtNombreEmpleado.Location = new System.Drawing.Point(3, 76);
+         this.txtNombreEmpleado.Location = new System.Drawing.Point(7, 76);
          this.txtNombreEmpleado.Name = "txtNombreEmpleado";
          this.txtNombreEmpleado.NumberDecimal = 0;
          this.txtNombreEmpleado.Size = new System.Drawing.Size(250, 24);
          this.txtNombreEmpleado.TabEnter = true;
          this.txtNombreEmpleado.TabIndex = 6;
-         this.txtNombreEmpleado.TypeField = UserWindowsControlLibrary.TextBoxSD.TiposDeCampo.Personalizado;
+         this.txtNombreEmpleado.TypeField = UserWindowsControlLibrary.TextBoxSD.TiposDeCampo.Opcional;
          this.txtNombreEmpleado.ValidField = false;
          // 
          // cboPuesto
          // 
          this.cboPuesto.AddAll = true;
          this.cboPuesto.AlternativeQuery = null;
-         this.cboPuesto.BackColor = System.Drawing.Color.White;
+         this.cboPuesto.BackColor = System.Drawing.Color.LightGray;
          this.cboPuesto.ColumnDisplay = "NombrePuesto";
          this.cboPuesto.ColumnValue = "Puesto";
          this.cboPuesto.ConcatenarID = true;
@@ -210,7 +216,7 @@
          this.cboPuesto.TabIndex = 2;
          this.cboPuesto.Table = "VWPuestosCorporacion";
          this.cboPuesto.TipoDeOrden = UserWindowsControlLibrary.ComboBoxSD.TiposDeOrden.Desc;
-         this.cboPuesto.TypeField = UserWindowsControlLibrary.ComboBoxSD.TiposDeCampo.Personalizado;
+         this.cboPuesto.TypeField = UserWindowsControlLibrary.ComboBoxSD.TiposDeCampo.Opcional;
          this.cboPuesto.User = null;
          this.cboPuesto.ValidField = false;
          this.cboPuesto.ValueMember = "Codigo";
@@ -219,7 +225,7 @@
          // 
          this.cboPlanillas.AddAll = true;
          this.cboPlanillas.AlternativeQuery = null;
-         this.cboPlanillas.BackColor = System.Drawing.Color.White;
+         this.cboPlanillas.BackColor = System.Drawing.Color.LightGray;
          this.cboPlanillas.ColumnDisplay = "Nombre";
          this.cboPlanillas.ColumnValue = "Planilla";
          this.cboPlanillas.ConcatenarID = true;
@@ -239,7 +245,7 @@
          this.cboPlanillas.TabIndex = 1;
          this.cboPlanillas.Table = "VwPlanillas";
          this.cboPlanillas.TipoDeOrden = UserWindowsControlLibrary.ComboBoxSD.TiposDeOrden.Desc;
-         this.cboPlanillas.TypeField = UserWindowsControlLibrary.ComboBoxSD.TiposDeCampo.Personalizado;
+         this.cboPlanillas.TypeField = UserWindowsControlLibrary.ComboBoxSD.TiposDeCampo.Opcional;
          this.cboPlanillas.User = null;
          this.cboPlanillas.ValidField = false;
          this.cboPlanillas.ValueMember = "Codigo";
@@ -248,7 +254,7 @@
          // 
          this.CboEmpresas.AddAll = true;
          this.CboEmpresas.AlternativeQuery = null;
-         this.CboEmpresas.BackColor = System.Drawing.Color.White;
+         this.CboEmpresas.BackColor = System.Drawing.Color.LightGray;
          this.CboEmpresas.ColumnDisplay = "Nombre";
          this.CboEmpresas.ColumnValue = "Empresa";
          this.CboEmpresas.ConcatenarID = true;
@@ -268,46 +274,46 @@
          this.CboEmpresas.TabIndex = 0;
          this.CboEmpresas.Table = "VwEmpresas";
          this.CboEmpresas.TipoDeOrden = UserWindowsControlLibrary.ComboBoxSD.TiposDeOrden.Desc;
-         this.CboEmpresas.TypeField = UserWindowsControlLibrary.ComboBoxSD.TiposDeCampo.Personalizado;
+         this.CboEmpresas.TypeField = UserWindowsControlLibrary.ComboBoxSD.TiposDeCampo.Opcional;
          this.CboEmpresas.User = null;
          this.CboEmpresas.ValidField = false;
          this.CboEmpresas.ValueMember = "Codigo";
          // 
          // txtNumeroDeEmpleado
          // 
-         this.txtNumeroDeEmpleado.BackColor = System.Drawing.Color.White;
-         this.txtNumeroDeEmpleado.FormatInput = UserWindowsControlLibrary.TextBoxSD.InputFormat.InputString;
+         this.txtNumeroDeEmpleado.BackColor = System.Drawing.Color.LightGray;
+         this.txtNumeroDeEmpleado.FormatInput = UserWindowsControlLibrary.TextBoxSD.InputFormat.InputNumber;
          this.txtNumeroDeEmpleado.Location = new System.Drawing.Point(678, 26);
          this.txtNumeroDeEmpleado.Name = "txtNumeroDeEmpleado";
          this.txtNumeroDeEmpleado.NumberDecimal = 0;
          this.txtNumeroDeEmpleado.Size = new System.Drawing.Size(100, 24);
          this.txtNumeroDeEmpleado.TabEnter = true;
          this.txtNumeroDeEmpleado.TabIndex = 3;
-         this.txtNumeroDeEmpleado.TypeField = UserWindowsControlLibrary.TextBoxSD.TiposDeCampo.Personalizado;
+         this.txtNumeroDeEmpleado.TypeField = UserWindowsControlLibrary.TextBoxSD.TiposDeCampo.Opcional;
          this.txtNumeroDeEmpleado.ValidField = false;
          // 
          // txtFechaFinalIngreso
          // 
-         this.txtFechaFinalIngreso.BackColor = System.Drawing.Color.White;
+         this.txtFechaFinalIngreso.BackColor = System.Drawing.Color.LightGray;
          this.txtFechaFinalIngreso.Location = new System.Drawing.Point(943, 26);
          this.txtFechaFinalIngreso.Mask = "00/00/0000";
          this.txtFechaFinalIngreso.Name = "txtFechaFinalIngreso";
          this.txtFechaFinalIngreso.Size = new System.Drawing.Size(150, 24);
          this.txtFechaFinalIngreso.TabEnter = true;
          this.txtFechaFinalIngreso.TabIndex = 5;
-         this.txtFechaFinalIngreso.TypeField = UserWindowsControlLibrary.MaskedTextBoxSD.TiposDeCampo.Personalizado;
+         this.txtFechaFinalIngreso.TypeField = UserWindowsControlLibrary.MaskedTextBoxSD.TiposDeCampo.Opcional;
          this.txtFechaFinalIngreso.ValidatingType = typeof(System.DateTime);
          // 
          // txtFechaInicialIngreso
          // 
-         this.txtFechaInicialIngreso.BackColor = System.Drawing.Color.White;
+         this.txtFechaInicialIngreso.BackColor = System.Drawing.Color.LightGray;
          this.txtFechaInicialIngreso.Location = new System.Drawing.Point(784, 26);
          this.txtFechaInicialIngreso.Mask = "00/00/0000";
          this.txtFechaInicialIngreso.Name = "txtFechaInicialIngreso";
          this.txtFechaInicialIngreso.Size = new System.Drawing.Size(153, 24);
          this.txtFechaInicialIngreso.TabEnter = true;
          this.txtFechaInicialIngreso.TabIndex = 4;
-         this.txtFechaInicialIngreso.TypeField = UserWindowsControlLibrary.MaskedTextBoxSD.TiposDeCampo.Personalizado;
+         this.txtFechaInicialIngreso.TypeField = UserWindowsControlLibrary.MaskedTextBoxSD.TiposDeCampo.Opcional;
          this.txtFechaInicialIngreso.ValidatingType = typeof(System.DateTime);
          // 
          // btnBuscar
@@ -328,6 +334,9 @@
          // 
          this.grdDatos.AllowUserToAddRows = false;
          this.grdDatos.AllowUserToDeleteRows = false;
+         this.grdDatos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.grdDatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
          this.grdDatos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DPIFirmantePatronoColumn,
@@ -528,46 +537,78 @@
          this.MnuEnviarContrato.Text = "Enviar Contrato";
          this.MnuEnviarContrato.Click += new System.EventHandler(this.MnuEnviarContrato_Click);
          // 
-         // statusStrip1
+         // toolStrip1
          // 
-         this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.lblRegistros});
-         this.statusStrip1.Location = new System.Drawing.Point(0, 751);
-         this.statusStrip1.Name = "statusStrip1";
-         this.statusStrip1.Size = new System.Drawing.Size(1417, 22);
-         this.statusStrip1.TabIndex = 2;
-         this.statusStrip1.Text = "statusStrip1";
-         // 
-         // toolStripStatusLabel1
-         // 
-         this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-         this.toolStripStatusLabel1.Size = new System.Drawing.Size(58, 17);
-         this.toolStripStatusLabel1.Text = "Registros:";
+         this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+         this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+         this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblRegistros,
+            this.toolStripLabel1,
+            this.toolStripSeparator1,
+            this.toolStripLabel3,
+            this.toolStripLabel2});
+         this.toolStrip1.Location = new System.Drawing.Point(0, 748);
+         this.toolStrip1.Name = "toolStrip1";
+         this.toolStrip1.Size = new System.Drawing.Size(1417, 25);
+         this.toolStrip1.TabIndex = 3;
+         this.toolStrip1.Text = "toolStrip1";
          // 
          // lblRegistros
          // 
+         this.lblRegistros.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+         this.lblRegistros.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
          this.lblRegistros.Name = "lblRegistros";
-         this.lblRegistros.Size = new System.Drawing.Size(13, 17);
+         this.lblRegistros.Size = new System.Drawing.Size(19, 22);
          this.lblRegistros.Text = "0";
+         this.lblRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+         // 
+         // toolStripLabel1
+         // 
+         this.toolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+         this.toolStripLabel1.Name = "toolStripLabel1";
+         this.toolStripLabel1.Size = new System.Drawing.Size(58, 22);
+         this.toolStripLabel1.Text = "Registros:";
+         // 
+         // toolStripSeparator1
+         // 
+         this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+         this.toolStripSeparator1.Name = "toolStripSeparator1";
+         this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+         // 
+         // toolStripLabel3
+         // 
+         this.toolStripLabel3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+         this.toolStripLabel3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+         this.toolStripLabel3.Name = "toolStripLabel3";
+         this.toolStripLabel3.Size = new System.Drawing.Size(76, 22);
+         this.toolStripLabel3.Text = "1.0.0.001";
+         // 
+         // toolStripLabel2
+         // 
+         this.toolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+         this.toolStripLabel2.Name = "toolStripLabel2";
+         this.toolStripLabel2.Size = new System.Drawing.Size(48, 22);
+         this.toolStripLabel2.Text = "Version:";
          // 
          // Form1
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(1417, 773);
-         this.Controls.Add(this.statusStrip1);
+         this.Controls.Add(this.toolStrip1);
          this.Controls.Add(this.grdDatos);
          this.Controls.Add(this.panel1);
+         this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.Name = "Form1";
-         this.Text = "Form1";
+         this.Text = "San Diego S.A. || Envio de Contratos";
+         this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
          this.Load += new System.EventHandler(this.Form1_Load);
          this.panel1.ResumeLayout(false);
          this.panel1.PerformLayout();
          ((System.ComponentModel.ISupportInitialize)(this.grdDatos)).EndInit();
          this.mnuOpciones.ResumeLayout(false);
-         this.statusStrip1.ResumeLayout(false);
-         this.statusStrip1.PerformLayout();
+         this.toolStrip1.ResumeLayout(false);
+         this.toolStrip1.PerformLayout();
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -609,9 +650,12 @@
       private System.Windows.Forms.DataGridViewTextBoxColumn EmpresaColumn;
       private System.Windows.Forms.ContextMenuStrip mnuOpciones;
       private System.Windows.Forms.ToolStripMenuItem MnuEnviarContrato;
-      private System.Windows.Forms.StatusStrip statusStrip1;
-      private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-      private System.Windows.Forms.ToolStripStatusLabel lblRegistros;
+      private System.Windows.Forms.ToolStrip toolStrip1;
+      private System.Windows.Forms.ToolStripLabel lblRegistros;
+      private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+      private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+      private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+      private System.Windows.Forms.ToolStripLabel toolStripLabel2;
    }
 }
 

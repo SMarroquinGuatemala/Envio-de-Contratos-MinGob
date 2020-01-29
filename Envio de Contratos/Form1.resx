@@ -207,7 +207,32 @@
   <metadata name="mnuOpciones.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>144, 17</value>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>260, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAA
+        AAD//////////////////////////////v//////+/Xo//r05f/////////+////////////////////
+        ///////////////////////////////////+/fv//////+rLgf/ox3f///////79+///////////////
+        /////////////////////////////////////v7///////z47f/ZoB3/2J4W//v15/////////79////
+        /////////////////////////////////////////v36///////lvmH/15oM/9icEP/juVb///////79
+        +/////7//////////////////////////////v3//v36///////t1Jb/040A/96sNf/fsD7/0owA/+vO
+        h////////v36///+/f///////////////v/+/fv///79///////u1Zf/1pYD/9SSAP/kvF3/5sJs/9SS
+        AP/VlQD/682E/////////v7//v37/////v////7///////z58f/lvl//0o0A/9SRBf/QhwD/7dKU//Hc
+        qv/QhwD/1JIF/9KMAP/itkv/+/Xm/////////v7//Pry/+rLf//YnQ//15sJ/9+vO//nwmr/8Nuo//37
+        9P/+/Pn/8t6v/+fEbv/gsT//2J0N/9eaBv/nxG7/+/fr//379v/u1Zn/3Kcm/9aYA//dqSv/47lT/+vN
+        g//79uj//fry/+zQi//kulb/3aov/9eZBf/bpSP/7dKR//z58P////7///////79+//qynv/1JAA/9SR
+        BP/QhgD/682J/+/ZpP/QhgD/1JIF/9OOAP/nxG7//vz4//////////7///////7++//+/vz///////Lg
+        s//Xmgz/1JEA/+O5Vf/mwGj/1JEA/9aXBf/v2KD////////+/P/+/fv////+///////////////+//79
+        +f//////8uC0/9SRAP/dqC3/3647/9OOAP/u1pr///////79+v////7/////////////////////////
+        /////////v36///////qy4P/1pkJ/9ebDf/lvWH///////79+v//////////////////////////////
+        /////////////////v///v7////9/92pMv/YnBT//Pfs/////////v7/////////////////////////
+        /////////////////////////v37///////u1pz/6cl9///////+/fv/////////////////////////
+        /////////////////////////////////////////Pnx//z47f//////////////////////////////
+        ////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAA==
+</value>
+  </data>
 </root>
