@@ -114,7 +114,7 @@ namespace Envio_de_Contratos
             //request.AddParameter("plazo", "1");
             request.AddParameter("plazo", plazo);
             //request.AddParameter("FechaInicioRelacion", "12/10/2025");
-            request.AddParameter("FechaInicioRelacion",   Convert.ToDateTime(FechaInicioRelacion).Date.ToShortDateString());
+            request.AddParameter("FechaInicioRelacion",   Convert.ToDateTime(FechaInicioRelacion).Date.ToString("yyyy/MM/dd"));
             //request.AddParameter("fechafin", "12/10/2025");
           
             if (string.IsNullOrEmpty(fechafin))
@@ -138,18 +138,19 @@ namespace Envio_de_Contratos
             request.AddParameter("dpiEmpleado", dpiEmpleado);
             //request.AddParameter("edadEmpleado", "50");
             request.AddParameter("edadEmpleado", edadEmpleado);
+            request.AddParameter("nacionalidadEmpleado", "109");
             //request.AddParameter("sexoEmpleado", "H");
             request.AddParameter("sexoEmpleado", sexoEmpleado);
             /**
              * Para el Archivo se debe de colocar la ruta del archivo pdf
              * y en el AddFile en lugar de "archivo.pdf" colocar el nombre del archivo a cargar.
              **/
-            if (!System.IO.File.Exists(@"C:\Sistemas San Diego\Contratos\" + NumeroDeEmpleado + ".pdf"))
+            if (!System.IO.File.Exists(@"\\nastrfca1\ListadoDeContrataciones\ContratosLaborales\" + NumeroDeEmpleado + ".pdf"))
             {
                MessageBox.Show("El archivo no existe en la carpeta de contratos. Numero de Empleado:" + NumeroDeEmpleado);
                return;
             }
-            byte[] data = System.IO.File.ReadAllBytes(@"C:\Sistemas San Diego\Contratos\" + NumeroDeEmpleado + ".pdf");
+            byte[] data = System.IO.File.ReadAllBytes(@"\\nastrfca1\ListadoDeContrataciones\ContratosLaborales\" + NumeroDeEmpleado + ".pdf");
             ByteArrayContent bytes = new ByteArrayContent(data);
 
             request.AddFile("file", data, NumeroDeEmpleado + ".pdf", "application/pdf");
@@ -337,6 +338,13 @@ namespace Envio_de_Contratos
          {
             this.Cursor = Cursors.Default;
          }
+
+      }
+
+      private void button1_Click(object sender, EventArgs e)
+      {
+         Form form = new Form2();
+         form.Show();
 
       }
    }
